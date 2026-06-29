@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Provalliance Spain · Salud de Franquicias</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #0d1b2a;
+    --navy2:  #162336;
+    --navy3:  #1e2f44;
+    --gold:   #c9a84c;
+    --gold-l: #e2c87a;
+    --white:  #f5f0e8;
+    --white2: #ede8df;
+    --ink:    rgba(245,240,232,0.85);
+    --ink2:   rgba(245,240,232,0.55);
+    --border: rgba(201,168,76,0.25);
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 48px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* corner decorations */
+  .hero::before, .hero::after {
+    content: '';
+    position: absolute;
+    width: 160px; height: 160px;
+    border: 1px solid var(--border);
+    pointer-events: none;
+  }
+  .hero::before { top: 32px; left: 32px; border-right: none; border-bottom: none; }
+  .hero::after  { bottom: 32px; right: 32px; border-left: none; border-top: none; }
+
+  .hero-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 6vw, 68px);
+    font-weight: 700;
+    line-height: 1.12;
+    color: var(--white);
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+
+  .hero-sub {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 3vw, 32px);
+    font-weight: 400;
+    color: var(--gold);
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+
+  .hero-divider {
+    width: 60px; height: 1px;
+    background: var(--gold);
+    margin: 0 auto 28px;
+    opacity: 0.6;
+  }
+
+  .hero-desc {
+    font-size: 15px;
+    color: var(--ink2);
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 44px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 14px 40px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    background: transparent;
+    transition: background .25s, color .25s;
+  }
+  .cta-btn:hover { background: var(--gold); color: var(--navy); }
+
+  /* ── MODULES ── */
+  .modules-section {
+    background: var(--navy2);
+    padding: 80px 24px;
+    display: none;
+  }
+  .modules-section.visible { display: block; }
+
+  .modules-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 48px;
+  }
+
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .module-card {
+    position: relative;
+    background: var(--navy3);
+    border: 1px solid var(--border);
+    padding: 36px 30px 30px;
+    text-decoration: none;
+    color: var(--white);
+    transition: border-color .25s, transform .2s;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: hidden;
+  }
+  .module-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+  .module-card.disabled { cursor: default; opacity: 0.7; }
+  .module-card.disabled:hover { transform: none; border-color: var(--border); }
+
+  .module-num {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .module-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--white);
+  }
+
+  .module-desc {
+    font-size: 13px;
+    color: var(--ink2);
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  .module-arrow {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-top: 8px;
+  }
+  .module-card.disabled .module-arrow { display: none; }
+
+  .module-soon {
+    position: absolute;
+    top: 14px; right: 16px;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--border);
+    padding: 3px 8px;
+  }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    background: var(--navy);
+    text-align: center;
+    padding: 24px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--ink2);
+    text-transform: uppercase;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-eyebrow">Provalliance Spain</div>
+  <h1 class="hero-title">Salud de<br>Franquicias</h1>
+  <div class="hero-sub">Panel de Control Interno</div>
+  <div class="hero-divider"></div>
+  <p class="hero-desc">Seguimiento financiero y operativo de la red de franquiciados. Acceso restringido a uso interno.</p>
+  <button class="cta-btn" onclick="showModules()">Explorar Dashboards</button>
+</section>
+
+<section class="modules-section" id="modules">
+  <div class="modules-title">Módulos disponibles</div>
+  <div class="modules-grid">
+
+    <a class="module-card" href="dashboard_deuda_franquiciados_v8.html">
+      <div class="module-num">01</div>
+      <div class="module-name">Cartera de Franquiciados</div>
+      <div class="module-desc">Deuda estructural, vencimientos, impagados, planes de pagos y alertas por franquiciado y sociedad.</div>
+      <div class="module-arrow">Acceder →</div>
+    </a>
+
+    <a class="module-card disabled" href="#">
+      <div class="module-num">02</div>
+      <div class="module-name">Cuenta de Resultados de Red</div>
+      <div class="module-desc">Resultados económicos de la red por marca, franquiciado y período. Comparativa vs. año anterior.</div>
+      <span class="module-soon">Próximamente</span>
+    </a>
+
+    <a class="module-card disabled" href="#">
+      <div class="module-num">03</div>
+      <div class="module-name">Gestión de Impagados</div>
+      <div class="module-desc">Seguimiento de reclamaciones, estados de gestión y evolución de cobros por área manager.</div>
+      <span class="module-soon">Próximamente</span>
+    </a>
+
+    <a class="module-card disabled" href="#">
+      <div class="module-num">04</div>
+      <div class="module-name">Compras de Producto</div>
+      <div class="module-desc">Volumen de compra de producto por franquiciado, marca y período. Comparativa vs. año anterior.</div>
+      <span class="module-soon">Próximamente</span>
+    </a>
+
+  </div>
+</section>
+
+<footer class="page-footer">© 2026 Provalliance Spain · Uso interno</footer>
+
+<script>
+  function showModules() {
+    const m = document.getElementById('modules');
+    m.classList.add('visible');
+    m.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelector('.cta-btn').style.display = 'none';
+  }
+
+  // disable click on placeholder cards
+  document.querySelectorAll('.module-card.disabled').forEach(c => {
+    c.addEventListener('click', e => e.preventDefault());
+  });
+</script>
+
+</body>
+</html>
